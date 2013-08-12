@@ -11,6 +11,7 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\Authentication\AuthenticationService;
 
 class Module
 {
@@ -33,6 +34,20 @@ class Module
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
+            ),
+        );
+    }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'factories'=>array(
+
+                'Zend\Authentication\AuthenticationService' => function($serviceManager) {
+                    // If you are using DoctrineORMModule:
+                    return $serviceManager->get('doctrine.authenticationservice.orm_default');
+                }
+
             ),
         );
     }

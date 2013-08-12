@@ -6,8 +6,24 @@
  * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
+namespace Application;
 
 return array(
+/*
+    'doctrine' => array(
+        'driver' => array(
+            'application_entities' => array(
+                'class' =>'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/application/Entity')
+            ),
+
+            'orm_default' => array(
+                'drivers' => array(
+                    'Application\Entity' => 'application_entities'
+                )
+            ))), */
+
     'router' => array(
         'routes' => array(
             'home' => array(
@@ -17,6 +33,16 @@ return array(
                     'defaults' => array(
                         'controller' => 'Application\Controller\Index',
                         'action'     => 'index',
+                    ),
+                ),
+            ),
+            'about' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/about',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action'     => 'about',
                     ),
                 ),
             ),
@@ -92,4 +118,5 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
+
 );
