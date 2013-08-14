@@ -24,6 +24,14 @@ class User implements InputFilterAwareInterface
     protected $id;
 
     /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @ORM\Column(type="string")
      */
     protected $username;
@@ -44,20 +52,27 @@ class User implements InputFilterAwareInterface
      */
     protected $role;
 
-    /**
-     * @param mixed $role
-     */
+
 
 
     /**
-     *  @ORM\OneToMany(targetEntity="Players", mappedBy="user")
+     *  @ORM\OneToMany(targetEntity="Games\Entity\Players", mappedBy="user")
      */
     protected $players;
+
+
 
     public function __construct(){
         $this->players = new ArrayCollection();
     }
 
+
+    public function hasPendingGame(){
+       foreach($this->players as $player){
+           if($player->hasPendingGame()) return true;
+            else return false;
+       }
+    }
 
     public function setRole($role)
     {
@@ -81,6 +96,14 @@ class User implements InputFilterAwareInterface
 
     public function __set($property, $value){
         $this->property = $value;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlayers()
+    {
+        return $this->players;
     }
 
     public function getRealName(){

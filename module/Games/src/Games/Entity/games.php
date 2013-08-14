@@ -49,12 +49,15 @@ class Games
         return $this->players;
     }
 
+
+
     /**
      * @param mixed $game_type
      */
     public function setGameType($game_type)
     {
         $this->game_type = $game_type;
+        return $this;
     }
 
     /**
@@ -87,6 +90,7 @@ class Games
     public function setMode($mode)
     {
         $this->mode = $mode;
+        return $this;
     }
 
     /**
@@ -103,6 +107,7 @@ class Games
     public function setStatus($status)
     {
         $this->status = $status;
+        return $this;
     }
 
     /**
@@ -119,6 +124,7 @@ class Games
     public function setTimeStarted($time_started)
     {
         $this->time_started = $time_started;
+        return $this;
     }
 
     /**

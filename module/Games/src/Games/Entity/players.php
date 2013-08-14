@@ -21,7 +21,7 @@ class Players
     protected $game;
 
     /**
-     * @ORM\ManyToOne(targetEntity="RelyAuth\Entity\User")
+     * @ORM\ManyToOne(targetEntity="RelyAuth\Entity\User", inversedBy="user")
      */
     protected $user;
 
@@ -41,6 +41,11 @@ class Players
     protected $outcome;
 
 
+    public function hasPendingGame(){
+        $gameStatus = $this->game->getStatus();
+        if('pending' == $gameStatus) return true;
+            else return false;
+    }
 
 
     /**
@@ -49,6 +54,7 @@ class Players
     public function setGame($game)
     {
         $this->game = $game;
+        return $this;
     }
 
     /**
@@ -57,6 +63,7 @@ class Players
     public function getGame()
     {
         return $this->game;
+
     }
 
     /**
@@ -81,6 +88,7 @@ class Players
     public function setOutcome($outcome)
     {
         $this->outcome = $outcome;
+        return $this;
     }
 
     /**
@@ -97,6 +105,7 @@ class Players
     public function setTimeJoined($time_joined)
     {
         $this->time_joined = $time_joined;
+        return $this;
     }
 
     /**
@@ -113,6 +122,7 @@ class Players
     public function setTurn($turn)
     {
         $this->turn = $turn;
+        return $this;
     }
 
     /**
@@ -129,6 +139,7 @@ class Players
     public function setUser($user)
     {
         $this->user = $user;
+        return $this;
     }
 
     /**

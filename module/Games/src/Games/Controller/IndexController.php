@@ -14,6 +14,8 @@ use Zend\View\Model\ViewModel;
 use Zend\Config\Config as Config;
 use RelyAuth\Entity\User as User;
 //use Games\Entity\Available_Games;
+use Games\Entity\Games as Game;
+use Games\Entity\Players as Player;
 
 class IndexController extends AbstractActionController
 {
@@ -65,7 +67,8 @@ class IndexController extends AbstractActionController
          */
 
         return array(
-            'games_pending' => $games_pending
+            'games_pending' => $games_pending,
+            'game_type_id' => $game_type_id
         );
 
 
@@ -74,8 +77,38 @@ class IndexController extends AbstractActionController
 
     /**
      * THIS IS THE ACTION THAT IS CALLED WHEN A USER CLICKS TO START A NEW GAME
+     *  - This action is called either behind the scenes or it redirects back to the pending action
      */
     public function startAction(){
+       // NEED TO PASS THE GAME TYPE IN THE ROUTE
+       $game_type_id = $this->params()->fromRoute('id');
+
+        /**
+         * May need to explicitly set the times for the game and the player
+         */
+
+        // GATHER THE USER ID FROM THE IDENTITY
+        if($user = $this->identity()){
+           // GET AN AVAILABLE GAME ENTITY WITH THE GAME TYPE ID
+           $em = $this->getEntityManager();
+
+
+           $game_type = $em->find('Available', $game_type_id);
+
+            // CREATE THE GAME
+           $game = new Game();
+           $game->setGameType($game_type)->setStatus('pending')->setMode(1);
+           $em->persist($game);
+
+
+           // CREATE A NEW PLAYER RECORD WITH THE USER
+           $player = new Player();
+           $player->setGame($game)->setUser($user)->setTurn(1)->setOutcome(null);
+           $em->persist($player);
+
+            $game->getPlayers()->add($player);
+            $em->flush();
+       }
 
     }
 
