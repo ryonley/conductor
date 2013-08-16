@@ -63,24 +63,6 @@ class User extends \RelyAuth\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::setRole($role);
     }
 
-    public function __contruct()
-    {
-        $this->__load();
-        return parent::__contruct();
-    }
-
-    public function __get($property)
-    {
-        $this->__load();
-        return parent::__get($property);
-    }
-
-    public function __set($property, $value)
-    {
-        $this->__load();
-        return parent::__set($property, $value);
-    }
-
     public function getPlayers()
     {
         $this->__load();

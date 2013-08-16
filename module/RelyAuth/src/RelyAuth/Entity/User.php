@@ -62,6 +62,16 @@ class User implements InputFilterAwareInterface
 
 
 
+
+    protected $inputFilter;
+
+
+
+    const SALT = '1234567890123456';
+
+
+
+
     public function __construct(){
         $this->players = new ArrayCollection();
     }
@@ -81,22 +91,8 @@ class User implements InputFilterAwareInterface
 
 
 
-    const SALT = '1234567890123456';
-
-    protected $inputFilter;
-
-    public function __contruct(){
-
-    }
 
 
-    public function __get($property){
-        return $this->$property;
-    }
-
-    public function __set($property, $value){
-        $this->property = $value;
-    }
 
     /**
      * @return mixed
@@ -105,6 +101,10 @@ class User implements InputFilterAwareInterface
     {
         return $this->players;
     }
+
+
+
+
 
     public function getRealName(){
         return $this->real_name;

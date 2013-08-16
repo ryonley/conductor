@@ -47,11 +47,11 @@ endif;
  */
 if ($user = $this->identity()) {
     // CHECK IF THIS USER HAS ANY GAMES
-    if($user->hasPendingGame() === false){
+    if($user->hasPendingGame() == false){
         // SHOW THE START A NEW GAME BOX
         ?>
         <div class='game_box'>
-            <a href="<?= $this->url('games', array('action' => 'add', 'id' => $game_type_id)); ?>">Start a New Game</a>
+            <a href="<?= $this->url('games', array('action' => 'start', 'id' => $game_type_id)); ?>">Start a New Game</a>
         </div>
         <?php
     }

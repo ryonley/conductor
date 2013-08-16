@@ -35,6 +35,21 @@ class Available
     protected $rules;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $minimum_players;
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getMinimumPlayers()
+    {
+        return $this->minimum_players;
+    }
+
+    /**
      * @param mixed $name
      */
     public function setName($name)

@@ -20,6 +20,8 @@ class Players
      */
     protected $game;
 
+
+
     /**
      * @ORM\ManyToOne(targetEntity="RelyAuth\Entity\User", inversedBy="user")
      */
@@ -48,14 +50,6 @@ class Players
     }
 
 
-    /**
-     * @param mixed $game
-     */
-    public function setGame($game)
-    {
-        $this->game = $game;
-        return $this;
-    }
 
     /**
      * @return mixed
@@ -64,6 +58,14 @@ class Players
     {
         return $this->game;
 
+    }
+
+    /**
+     * @param mixed $game
+     */
+    public function setGame($game)
+    {
+        $this->game = $game;
     }
 
     /**
