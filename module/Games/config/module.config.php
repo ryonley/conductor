@@ -23,8 +23,8 @@ return array(
 
     'controllers' => array(
         'invokables' => array(
-            'Games\Controller\Index' => 'Games\Controller\IndexController'
-
+            'Games\Controller\Index' => 'Games\Controller\IndexController',
+            'Games\Controller\TicTacToe' => 'Games\Controller\TicTacToeController',
         ),
     ),
     'router' => array(
@@ -83,6 +83,21 @@ return array(
                         'action'        => 'index',
                     ),
                 )
+            ),
+            'TicTacToe' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/tic-tac-toe[/:action][/:game_id][/:player_id]',
+                    'constraints' => array(
+                        'game_id' => '[0-9]+',
+                        'player_id' => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        '__NAMESPACE__' => 'Games\Controller',
+                        'controller'    => 'TicTacToe',
+                        'action'        => 'index',
+                    ),
+                ),
             )
         ),
     ),

@@ -93,7 +93,7 @@ class IndexController extends AbstractActionController
 
            $game_type = $em->find('Games\Entity\Available', $game_type_id);
 
-            $datetime = new \DateTime("now");
+           $datetime = new \DateTime("now");
 
             // CREATE THE GAME
            $game = new Game();
@@ -103,7 +103,10 @@ class IndexController extends AbstractActionController
 
            // CREATE A NEW PLAYER RECORD WITH THE USER
            $player = new Player();
-           $player->setTimeJoined($datetime)->setTurn(1)->setOutcome('1');
+            /**
+             * FOR NOW THE PLAYER THAT STARTS THE GAME WILL ALWAYS BE X
+             */
+            $player->setTimeJoined($datetime)->setTurn(1)->setOutcome('1')->setMark('x');
            $em->persist($player);
 
             $user->getPlayers()->add($player);
@@ -128,7 +131,13 @@ class IndexController extends AbstractActionController
 
         $game_id = $this->params()->fromRoute('id');
         // RETRIEVE THE GAME
-        $game = $em->find('Game', $game_id);
+        $game = $em->find('Games\Entity\Games', $game_id);
+        $game_type = $game->getGameType();
+        $game_name = $game_type->getName();
+        $game_name_nospace = str_replace(" ", "", $game_name);
+        $game_name_dashes = str_replace(" ", "-", $game_name);
+        // make game name dashes lower case
+        $game_name_dashes = strtolower($game_name_dashes);
 
         $datetime = new \DateTime("now");
 
@@ -139,7 +148,10 @@ class IndexController extends AbstractActionController
              * CAN SAFELY SET THIS PLAYERS TURN TO 0 (FALSE) FOR NOW)
              */
             $player = new Player();
-            $player->setTimeJoined($datetime)->setOutcome('1')->setTurn(0);
+            /**
+             * FOR NOW THE PLAYER THAT 'JOINS' THE GAME WILL ALWAYS BE O
+             */
+            $player->setTimeJoined($datetime)->setOutcome('1')->setTurn(0)->setMark('o');
             $em->persist($player);
 
             // ASSIGN THE PLAYER TO THE USER
@@ -163,13 +175,16 @@ class IndexController extends AbstractActionController
             /**
              * THIS MAY NOT BE THE CORRECT WAY TO GET THE COUNT
              */
-            $player_count = $game->getPlayers->count();
+            $player_count = $game->getPlayers()->count();
 
             // NOW UPDATE THE GAME STATUS TO ACTIVE
             if($player_count >= $minimum_players_needed){
                 $game->setStatus('active');
                 // IN THIS CASE REDIRECT TO THE PLAY ACTION
-                return $this->redirect()->toRoute('games', array('action' => 'play', 'id' => $game_id));
+                $player_id = $player->getId();
+                return $this->redirect()->toRoute($game_name_nospace, array('action' => 'index', 'game_id' => $game_id, 'player_id' => $player_id));
+               // $url = "/".$game_name_dashes."/".$game_id;
+                //return $this->redirect()->toUrl($url);
             } else {
                 // IN THIS CASE THE PLAYER COUNT THAT IS DISPLAYED IN THE GAME BOX NEEDS TO BE UPDATED
                 // THIS WILL BE DONE WITH AJAX

@@ -12,6 +12,7 @@ if(!empty($games_pending)):
         foreach($games_pending as $game){
 
             $time_started_object = $game->getTimeStarted();
+            $game_id = $game->getId();
 
             $time =  $time_started_object->format('m-d-Y H:i:s');
 
@@ -32,6 +33,7 @@ if(!empty($games_pending)):
                 <div class='game_box'>
                     <p>Created on: <?= $time; ?></p>
                     <p>Players: <?= $user_string; ?></p>
+                    <a href="<?= $this->url('games', array('action' => 'join', 'id' => $game_id)); ?>">Join This Game</a>
                 </div>
 
             <?php

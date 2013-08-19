@@ -17,7 +17,7 @@ class Games
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Available")
+     * @ORM\ManyToOne(targetEntity="Available", inversedBy="games")
      */
     protected $game_type;
 

@@ -20,10 +20,12 @@ class Players
      */
     protected $game;
 
+    protected $game_id;
+
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="RelyAuth\Entity\User", inversedBy="user")
+     * @ORM\ManyToOne(targetEntity="RelyAuth\Entity\User", inversedBy="players")
      */
     protected $user;
 
@@ -41,6 +43,29 @@ class Players
      * @ORM\Column(type="string")
      */
     protected $outcome;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $mark;
+
+    /**
+     * @param mixed $mark
+     */
+    public function setMark($mark)
+    {
+        $this->mark = $mark;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMark()
+    {
+        return $this->mark;
+    }
+
+
 
 
     public function hasPendingGame(){
@@ -67,6 +92,8 @@ class Players
     {
         $this->game = $game;
     }
+
+
 
     /**
      * @param mixed $id

@@ -16,13 +16,6 @@ class Available
      */
     protected $id;
 
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * @ORM\Column(type="string")
@@ -39,6 +32,23 @@ class Available
      */
     protected $minimum_players;
 
+    /**
+     *  @ORM\OneToMany(targetEntity="Games", mappedBy="game_type")
+     */
+    protected $games;
+
+    public function __construct(){
+        $this->games = new ArrayCollection();
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
 
     /**
